@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 import ErrorRoute from './components/Error.jsx'
-import Chat from './pages/Chat.jsx'
+import Chat from './components/Chat.jsx'
 import {
   createBrowserRouter,
   RouterProvider,

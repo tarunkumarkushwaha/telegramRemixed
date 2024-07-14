@@ -1,23 +1,27 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { NavLink, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
-import SideBar from './SideBar';
+import SearchIcon from '@mui/icons-material/Search';
 import { Context } from '../MyContext';
+import Logo from "/Logo.png"
+import SideBar from './SideBar';
 
 const Navbar = () => {
-  const [sidebar, setSidebar] = useState(false)
+  const [Showsidebar, setShowSidebar] = useState(false)
   const { dark, setdark, query, setquery } = useContext(Context);
 
   const style = {
     uiMode: dark ?
-      "text-white bg-slate-900"
+      " bg-zinc-900/95"
       :
-      "text-black bg-green-300"
+      "bg-zinc-50/95",
+    text: dark ? "text-slate-50" : "text-slate-900"
   }
+
   let navigate = useNavigate()
 
   const toggleNav = function () {
-    setSidebar(!sidebar)
+    setShowSidebar(!Showsidebar)
   }
 
   const querySetter = (e) => {
@@ -28,25 +32,22 @@ const Navbar = () => {
   }
   return (
     <>
-      <header className='bg-slate-700 h-20 md:px-10 px-5 flex flex-row justify-between items-center'>
-        <div className="flex justify-center items-center">
-          <div onClick={toggleNav} className="p-1 md:p-3 cursor-pointer text-white"><MenuIcon /></div>
-          <div className="flex justify-center items-center cursor-pointer">
-            {/* <img className='sm:h-16 h-8 sm:w-10 w-5 ml-7 md:ml-10 rounded-xl' src={Logo} alt="Telegram" /> */}
-            <p className='text-white sm:text-lg text-sm italic p-2'>Telegram</p>
+      <header className={`${style.uiMode} ${style.text} min-h-screen w-[25%] box-border`}>
+        <div className="flex items-start p-2">
+          <div onClick={toggleNav} className={`p-1 md:p-3 cursor-pointer`}><MenuIcon /></div>
+          <div className="relative mx-2">
+          <SearchIcon className='absolute top-3 left-3'/>
+            <input
+              type="text"
+              placeholder="Search..."
+              onChange={querySetter}
+              className="w-full py-3 pl-10 pr-4 bg-zinc-400/25 bg-opacity-50 text-black rounded-2xl border border-transparent focus:border-blue-400 focus:ring-0 focus:outline-none"
+            />
           </div>
         </div>
-        <div className="shadow-xl md:block hidden w-full max-w-[350px] rounded-md pl-6 p-4 bg-slate-700">
-
-          <input
-            className='bg-slate-700 text-slate-100 outline-none'
-            onChange={querySetter}
-            type="text"
-            placeholder="Search"
-          />
-        </div>
       </header>
-      <SideBar sidebar={sidebar} dark={dark} toggleNav={toggleNav} setdark={setdark} />
+      <SideBar Showsidebar={Showsidebar} dark={dark} toggleNav={toggleNav} setdark={setdark} />
+
     </>
   )
 }
