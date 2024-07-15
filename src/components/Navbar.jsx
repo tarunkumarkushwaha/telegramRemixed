@@ -9,9 +9,7 @@ import Card from './Card';
 
 const Navbar = () => {
   const [Showsidebar, setShowSidebar] = useState(false)
-  const { dark, setdark, query, setquery, chatdata } = useContext(Context);
-
-  const chatNameData = chatdata && Object.keys(chatdata)
+  const { dark, setdark, query, setquery, chatdata, chatNamedata , setchatNamedata } = useContext(Context);
 
   // console.log(chatdata)
 
@@ -32,6 +30,10 @@ const Navbar = () => {
   const querySetter = (e) => {
     let value = e.target.value.toLowerCase()
     setquery(value)
+    const filteredData = chatNamedata.filter(item =>
+      item.toLowerCase().includes(value)
+    );
+    setchatNamedata(filteredData)
   }
 
   return (
@@ -49,7 +51,7 @@ const Navbar = () => {
             />
           </div>
         </div>
-        {chatdata && chatNameData.map((data, i) => <Card key={i} name={data} />)}
+        {chatdata && chatNamedata.map((data, i) => <Card key={i} name={data} />)}
       </header>
       <SideBar Showsidebar={Showsidebar} dark={dark} toggleNav={toggleNav} setdark={setdark} />
     </>

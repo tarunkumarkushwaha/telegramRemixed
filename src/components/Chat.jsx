@@ -9,7 +9,7 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 
 const Chat = () => {
     const [chat, setchat] = useState("")
-    const { dark } = useContext(Context);
+    const { dark,chatdata } = useContext(Context);
 
     const style = {
         uiMode: dark ?

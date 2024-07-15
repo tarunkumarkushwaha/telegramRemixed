@@ -4,6 +4,7 @@ import { Context } from '../MyContext'
 
 const ContextWrapper = ({ children }) => {
     const [chatdata, setchatdata] = useState()
+    const [chatNamedata, setchatNamedata] = useState()
     const [data, setdata] = useState()
     const [dark, setdark] = useState(false)
     const [query, setquery] = useState("")
@@ -34,6 +35,7 @@ const ContextWrapper = ({ children }) => {
                 setchatdata(groupedMessages);
                 setdata(groupedMessages)
                 setLoading(false);
+                setchatNamedata(Object.keys(groupedMessages))
             })
             .catch((error) => {
                 setError(error);
@@ -46,21 +48,32 @@ const ContextWrapper = ({ children }) => {
     }, []);
 
     // useEffect(() => {
-    //     const result = {};
-    //     for (const key in data) {
-    //       if (data.hasOwnProperty(key) && key.toLowerCase().includes(query.toLowerCase())) {
-    //         result[key] = data[key];
-    //       }
-    //     }
-    //     setchatdata(result);
-    //   }, [query, data])
+
+    //     const Data2 = data
+
+    //     data && delete Object.assign(Data2, {["NULL"]: Data2[null] })[null];
+
+    //     const filteredData = Object.keys(Data2).reduce((filtered, key) => {
+    //         if (Data2[key].toString().toLowerCase().includes(query.toLowerCase())) {
+    //             filtered[key] = data[key];
+    //         }
+    //         return filtered;
+    //     }, {});
+    //     console.log(filteredData)
+
+    //     setchatdata(Data2);
+    // }, [query, data])
+
+
+    // console.log(chatdata)
 
 
     return (
         <>
             <Context.Provider value={{
                 dark, setdark, fetchchat,
-                query, setquery, chatdata, loading
+                query, setquery, chatdata, loading,
+                chatNamedata, setchatNamedata
             }}>
                 {children}
             </Context.Provider>
