@@ -1,17 +1,18 @@
-import { useState } from 'react'
+import React, { useContext, useState } from 'react'
+import { Context } from './MyContext';
 import './App.css'
 import Navbar from './components/Navbar'
 import Chat from './components/Chat'
+import LoadingPage from './components/LoadingPage';
 
 function App() {
-  // const [count, setCount] = useState(0)
-
+  const { dark, loading } = useContext(Context);
   return (
     <>
-      <div className='flex'>
-      <Navbar />
-      <Chat/>
-      </div>
+      {loading ? <LoadingPage dark={dark} /> : <div className='flex'>
+        <Navbar />
+        <Chat />
+      </div>}
     </>
   )
 }
