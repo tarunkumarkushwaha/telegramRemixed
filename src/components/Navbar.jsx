@@ -9,7 +9,11 @@ import Card from './Card';
 
 const Navbar = () => {
   const [Showsidebar, setShowSidebar] = useState(false)
-  const { dark, setdark, query, setquery, chatNameData } = useContext(Context);
+  const { dark, setdark, query, setquery, chatdata } = useContext(Context);
+
+  const chatNameData = chatdata && Object.keys(chatdata)
+
+  // console.log(chatdata)
 
   const style = {
     uiMode: dark ?
@@ -27,15 +31,12 @@ const Navbar = () => {
 
   const querySetter = (e) => {
     let value = e.target.value.toLowerCase()
-    if (value !== "") {
-      setquery(value)
-    };
-    }
-    
+    setquery(value)
+  }
 
   return (
     <>
-      <header className={`${style.uiMode} ${style.text} min-h-screen w-[25%]`}>
+      <header className={`${style.uiMode} ${style.text} min-h-screen sm:w-[25%] w-full`}>
         <div className="flex items-start p-2 box-border">
           <div onClick={toggleNav} className={`p-1 md:p-3 cursor-pointer`}><MenuIcon /></div>
           <div className="relative mx-2">
@@ -48,7 +49,7 @@ const Navbar = () => {
             />
           </div>
         </div>
-        {chatNameData && chatNameData.map((data, i) => <Card key={i} name={data.creator.name} />)}
+        {chatdata && chatNameData.map((data, i) => <Card key={i} name={data} />)}
       </header>
       <SideBar Showsidebar={Showsidebar} dark={dark} toggleNav={toggleNav} setdark={setdark} />
     </>

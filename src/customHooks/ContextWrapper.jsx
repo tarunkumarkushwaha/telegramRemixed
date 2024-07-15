@@ -3,8 +3,8 @@ import { useEffect, useState } from "react";
 import { Context } from '../MyContext'
 
 const ContextWrapper = ({ children }) => {
-    const [chatNameData, setchatNameData] = useState()
-    const [chatMessegeData, setchatMessegeData] = useState()
+    const [chatdata, setchatdata] = useState()
+    const [data, setdata] = useState()
     const [dark, setdark] = useState(false)
     const [query, setquery] = useState("")
     const [loading, setLoading] = useState(true);
@@ -19,7 +19,20 @@ const ContextWrapper = ({ children }) => {
                 return response.json();
             })
             .then((Data) => {
-                setchatMessegeData(Data);
+                const groupedMessages = Data.data.reduce((acc, message) => {
+                    const senderName = message.sender.name;
+                    if (!acc[senderName]) {
+                        acc[senderName] = [];
+                    }
+                    acc[senderName].push(message);
+                    return acc;
+                }, {});
+
+                for (const senderName in groupedMessages) {
+                    groupedMessages[senderName].sort((a, b) => new Date(a.created_at) - new Date(b.created_at));
+                }
+                setchatdata(groupedMessages);
+                setdata(groupedMessages)
                 setLoading(false);
             })
             .catch((error) => {
@@ -29,42 +42,25 @@ const ContextWrapper = ({ children }) => {
     }
 
     useEffect(() => {
-        fetch('https://devapi.beyondchats.com/api/get_all_chats?page=1')
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                return response.json();
-            })
-            .then((Data) => {
-                let filteredData = Data.data.data.filter(chat => chat.creator.name !== null && chat.creator.name !== undefined).filter((chat, index, self) =>
-                    index === self.findIndex(t => (
-                        t.creator.name === chat.creator.name
-                    ))
-                );
-                setchatNameData(filteredData);
-                setLoading(false);
-            })
-            .catch((error) => {
-                setError(error);
-                setLoading(false);
-            });
+        fetchchat()
     }, []);
 
-    useEffect(() => {
-        const filtered = chatNameData && chatNameData.filter(chat =>
-            chat.creator.name.toLowerCase().includes(query.toLowerCase())
-        );
-        console.log(filtered)
-        setchatNameData(filtered)
-    }, [query])
+    // useEffect(() => {
+    //     const result = {};
+    //     for (const key in data) {
+    //       if (data.hasOwnProperty(key) && key.toLowerCase().includes(query.toLowerCase())) {
+    //         result[key] = data[key];
+    //       }
+    //     }
+    //     setchatdata(result);
+    //   }, [query, data])
 
 
     return (
         <>
             <Context.Provider value={{
-                chatNameData, dark, setdark, fetchchat,
-                query, setquery, chatMessegeData, loading
+                dark, setdark, fetchchat,
+                query, setquery, chatdata, loading
             }}>
                 {children}
             </Context.Provider>

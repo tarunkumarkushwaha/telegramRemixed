@@ -42,7 +42,7 @@ const SideBar = ({ Showsidebar, toggleNav, dark, setdark }) => {
 
     return (
         <>
-            <aside ref={menuRef} className={`fixed z-20 top-0 left-0 sm:h-2/3  h-full transition-all duration-1000 ease-in-out ${!Showsidebar ? "md:w-[25vw] w-[100vw] -translate-x-full" : "md:w-[25vw] w-[50vw] -translate-x-1"}`}>
+            <aside ref={menuRef} className={`fixed z-20 top-0 left-0 sm:h-[90%] h-full transition-all duration-1000 ease-in-out ${!Showsidebar ? "md:w-[25vw] w-[100vw] -translate-x-full" : "md:w-[25vw] w-[70vw] -translate-x-1"}`}>
                 {animateEffect && <div className={`animate-wave ${!dark ? "bg-zinc-900/95 text-slate-50" : "bg-zinc-50/95 text-slate-900"}`}></div>}
                 <div className={`h-full px-3 py-4 overflow-y-auto rounded-xl ml-2 ${dark ? "bg-zinc-900/95 text-slate-50" : "bg-zinc-50/95 text-slate-900"}`}>
                     <div onClick={toggleNav} className={`cursor-pointer pl-10 w-4 text-xxl fixed top-8 right-[35px] `}>
@@ -52,7 +52,7 @@ const SideBar = ({ Showsidebar, toggleNav, dark, setdark }) => {
                         {dark ? <DarkModeIcon /> : <WbSunnyIcon />}
                     </div>
 
-                    <div className="w-64 h-full p-4">
+                    <div className="mt-20 p-4">
                         <ul className="space-y-4">
                             <li className="flex items-center space-x-2">
                                 <BookmarkIcon />
@@ -76,10 +76,10 @@ const SideBar = ({ Showsidebar, toggleNav, dark, setdark }) => {
                                     <AnimationIcon />
                                     <span>Animations</span>
                                 </div>
-                                <label className="switch">
+                                {/* <label className="switch">
                                     <input type="checkbox" />
                                     <span className="slider round"></span>
-                                </label>
+                                </label> */}
                             </li>
                             <li className="flex items-center space-x-2">
                                 <HelpOutlineIcon />
