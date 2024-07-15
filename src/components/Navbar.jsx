@@ -5,10 +5,11 @@ import SearchIcon from '@mui/icons-material/Search';
 import { Context } from '../MyContext';
 import Logo from "/Logo.png"
 import SideBar from './SideBar';
+import Card from './Card';
 
 const Navbar = () => {
   const [Showsidebar, setShowSidebar] = useState(false)
-  const { dark, setdark, query, setquery } = useContext(Context);
+  const { dark, setdark, query, setquery, chatNameData } = useContext(Context);
 
   const style = {
     uiMode: dark ?
@@ -28,15 +29,17 @@ const Navbar = () => {
     let value = e.target.value.toLowerCase()
     if (value !== "") {
       setquery(value)
+    };
     }
-  }
+    
+
   return (
     <>
-      <header className={`${style.uiMode} ${style.text} min-h-screen w-[25%] box-border`}>
-        <div className="flex items-start p-2">
+      <header className={`${style.uiMode} ${style.text} min-h-screen w-[25%]`}>
+        <div className="flex items-start p-2 box-border">
           <div onClick={toggleNav} className={`p-1 md:p-3 cursor-pointer`}><MenuIcon /></div>
           <div className="relative mx-2">
-          <SearchIcon className='absolute top-3 left-3'/>
+            <SearchIcon className='absolute top-3 left-3' />
             <input
               type="text"
               placeholder="Search..."
@@ -45,9 +48,9 @@ const Navbar = () => {
             />
           </div>
         </div>
+        {chatNameData && chatNameData.map((data, i) => <Card key={i} name={data.creator.name} />)}
       </header>
       <SideBar Showsidebar={Showsidebar} dark={dark} toggleNav={toggleNav} setdark={setdark} />
-
     </>
   )
 }

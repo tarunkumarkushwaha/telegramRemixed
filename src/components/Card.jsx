@@ -1,26 +1,46 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext } from 'react';
+import { Context } from '../MyContext';
 
-const Card = ({ data }) => {
+const Card = ({ name}) => {
+    const { dark, query, setquery } = useContext(Context);
 
-    const navigate = useNavigate()
+    const dateString = '2024-07-15T10:42:27.000000Z';
+    const date = new Date(dateString);
 
-    const fullview = () =>{
-        //  navigate(`/chat=${data.title}`)
+    // Extracting date and month
+    const day = date.getDate(); // Gets the day of the month
+    const month = date.getMonth() + 1;
+
+    // console.log(name)
+
+    const style = {
+        uiMode: dark ?
+            " bg-zinc-900/95"
+            :
+            "bg-zinc-50/95",
+        text: dark ? "text-slate-50" : "text-slate-900"
     }
-
     return (
-        <>
-            <div onClick={fullview} className={` m-2 cursor-pointer bg-zinc-300 border-zinc-400 text-zinc-900
-             shadow-md hover:shadow-xl hover:scale-105 duration-500 sm:h-[380px] h-[290px]
-             sm:w-[300px] w-[250px] border p-2 rounded-md flex flex-col`}>
-                <img className='mx-auto rounded-lg sm:h-40 h-32' src={data.urlToImage} alt={data.title} />
-                <div className="text-center font-bold sm:text-xl text-base my-2">
-                    {data.title}
+        <div className={`${style.uiMode} ${style.text} m-2 px-2 rounded-lg shadow-md`}>
+            <div className="flex items-center container">
+                <div className="bg-blue-500 text-white rounded-full h-12 w-12 flex items-center justify-center">
+                    <span className="text-2xl font-bold">{name.split(' ').map(word => word[0].toUpperCase()).join('')}</span>
+                </div>
+                <div className='flex flex-col p-2 justify-center w-[80%]'>
+                    <div className='flex justify-between items-center w-full'>
+                        <div className="text-lg font-medium">{name}</div>
+                        <div className="text-gray-400 text-sm">{`${day}-${month}`}</div>
+                    </div>
+                    <div className='mt-2'>
+                        <p className="  w-64 overflow-hidden text-ellipsis whitespace-nowrap">
+                            hey
+                        </p>
+                    </div>
+
                 </div>
             </div>
-        </>
-    )
-}
+        </div>
+    );
+};
 
-export default Card
+export default Card;
