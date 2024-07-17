@@ -1,17 +1,13 @@
 import React, { useEffect, useState, useContext } from 'react'
-import { NavLink, useNavigate } from 'react-router-dom'
 import MenuIcon from '@mui/icons-material/Menu';
 import SearchIcon from '@mui/icons-material/Search';
 import { Context } from '../MyContext';
-import Logo from "/Logo.png"
 import SideBar from './SideBar';
 import Card from './Card';
 
 const Navbar = () => {
   const [Showsidebar, setShowSidebar] = useState(false)
-  const { dark, setdark, query, setquery, chatdata} = useContext(Context);
-
-  // console.log(chatdata)
+  const { dark, setdark, setquery, chatdata } = useContext(Context);
 
   let chatNamedata = Object.keys(chatdata)
 
@@ -23,8 +19,6 @@ const Navbar = () => {
     text: dark ? "text-slate-50" : "text-slate-900"
   }
 
-  let navigate = useNavigate()
-
   const toggleNav = function () {
     setShowSidebar(!Showsidebar)
   }
@@ -32,10 +26,6 @@ const Navbar = () => {
   const querySetter = (e) => {
     let value = e.target.value.toLowerCase()
     setquery(value)
-    const filteredData = chatNamedata.filter(item =>
-      item.toLowerCase().includes(value)
-    );
-    setchatNamedata(filteredData)
   }
 
   return (

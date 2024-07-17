@@ -15,8 +15,6 @@ const Card = ({ name, chatdata }) => {
     const day = date.getDate();
     const month = date.getMonth() + 1;
 
-    // console.log(name)
-
     const style = {
         uiMode: dark ?
             " bg-zinc-900/95"

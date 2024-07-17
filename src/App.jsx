@@ -7,6 +7,7 @@ import LoadingPage from './components/LoadingPage';
 
 function App() {
   const { dark, loading, currentChat } = useContext(Context);
+  
   return (
     <>
       {loading ? <LoadingPage dark={dark} /> : <div className='flex'>
