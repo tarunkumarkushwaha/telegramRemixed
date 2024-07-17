@@ -6,12 +6,12 @@ import Chat from './components/Chat'
 import LoadingPage from './components/LoadingPage';
 
 function App() {
-  const { dark, loading } = useContext(Context);
+  const { dark, loading, currentChat } = useContext(Context);
   return (
     <>
       {loading ? <LoadingPage dark={dark} /> : <div className='flex'>
         <Navbar />
-        <Chat />
+        {currentChat && <Chat />}
       </div>}
     </>
   )

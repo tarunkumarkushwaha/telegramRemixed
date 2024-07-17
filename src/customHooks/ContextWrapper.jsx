@@ -4,7 +4,7 @@ import { Context } from '../MyContext'
 
 const ContextWrapper = ({ children }) => {
     const [chatdata, setchatdata] = useState()
-    const [chatNamedata, setchatNamedata] = useState()
+    const [currentChat, setcurrentChat] = useState()
     const [data, setdata] = useState()
     const [dark, setdark] = useState(false)
     const [query, setquery] = useState("")
@@ -21,7 +21,7 @@ const ContextWrapper = ({ children }) => {
             })
             .then((Data) => {
                 const groupedMessages = Data.data.reduce((acc, message) => {
-                    const senderName = message.sender.name;
+                    const senderName = message.sender.name || "Unsaved";
                     if (!acc[senderName]) {
                         acc[senderName] = [];
                     }
@@ -35,7 +35,6 @@ const ContextWrapper = ({ children }) => {
                 setchatdata(groupedMessages);
                 setdata(groupedMessages)
                 setLoading(false);
-                setchatNamedata(Object.keys(groupedMessages))
             })
             .catch((error) => {
                 setError(error);
@@ -47,33 +46,28 @@ const ContextWrapper = ({ children }) => {
         fetchchat()
     }, []);
 
-    // useEffect(() => {
+    useEffect(() => {
+        if (data) {
+            let output = {}
+            const filteredKeys = Object.keys(data).filter(item =>
+                item.toLowerCase().includes(query.toLowerCase())
+            );
+            filteredKeys.forEach((item) => {
+                output[item] = data[item];
+            })
+            setchatdata(output);
+        } else {
+            setchatdata(data);
+        }
 
-    //     const Data2 = data
-
-    //     data && delete Object.assign(Data2, {["NULL"]: Data2[null] })[null];
-
-    //     const filteredData = Object.keys(Data2).reduce((filtered, key) => {
-    //         if (Data2[key].toString().toLowerCase().includes(query.toLowerCase())) {
-    //             filtered[key] = data[key];
-    //         }
-    //         return filtered;
-    //     }, {});
-    //     console.log(filteredData)
-
-    //     setchatdata(Data2);
-    // }, [query, data])
-
-
-    // console.log(chatdata)
-
+    }, [query, data])
 
     return (
         <>
             <Context.Provider value={{
                 dark, setdark, fetchchat,
                 query, setquery, chatdata, loading,
-                chatNamedata, setchatNamedata
+                currentChat, setcurrentChat
             }}>
                 {children}
             </Context.Provider>

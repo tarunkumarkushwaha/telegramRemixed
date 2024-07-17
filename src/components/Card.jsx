@@ -1,14 +1,18 @@
 import React, { useContext } from 'react';
 import { Context } from '../MyContext';
 
-const Card = ({ name}) => {
-    const { dark, query, setquery } = useContext(Context);
+const Card = ({ name, chatdata }) => {
+    const { dark, setcurrentChat } = useContext(Context);
 
-    const dateString = '2024-07-15T10:42:27.000000Z';
+    let chat = chatdata[name]
+
+    const setChatScreen = () => {
+        setcurrentChat({ [name]: chat })
+    }
+
+    const dateString = chat[0].created_at
     const date = new Date(dateString);
-
-    // Extracting date and month
-    const day = date.getDate(); // Gets the day of the month
+    const day = date.getDate();
     const month = date.getMonth() + 1;
 
     // console.log(name)
@@ -20,8 +24,9 @@ const Card = ({ name}) => {
             "bg-zinc-50/95",
         text: dark ? "text-slate-50" : "text-slate-900"
     }
+
     return (
-        <div className={`${style.uiMode} ${style.text} m-2 px-2 rounded-lg shadow-md`}>
+        <div onClick={setChatScreen} className={`${style.uiMode} ${style.text} m-2 px-2 rounded-lg shadow-md cursor-pointer`}>
             <div className="flex items-center container">
                 <div className="bg-blue-500 text-white rounded-full h-12 w-12 flex items-center justify-center">
                     <span className="text-2xl font-bold">{name.split(' ').map(word => word[0].toUpperCase()).join('')}</span>

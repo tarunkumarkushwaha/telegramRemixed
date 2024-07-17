@@ -9,7 +9,16 @@ import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 
 const Chat = () => {
     const [chat, setchat] = useState("")
-    const { dark,chatdata } = useContext(Context);
+    const { dark, currentChat } = useContext(Context);
+
+    let currentChatName = Object.keys(currentChat)[0]
+
+    const dateString = currentChat[currentChatName][0].updated_at
+    const date = new Date(dateString);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+
+    // console.log(currentChat)
 
     const style = {
         uiMode: dark ?
@@ -28,7 +37,7 @@ const Chat = () => {
                             MB
                         </div>
                         <div className="ml-4">
-                            <div className="font-bold">tarun</div>
+                            <div className="font-bold">{currentChatName}</div>
                             <div className="text-sm text-gray-400">last seen 8/22/2023</div>
                         </div>
                     </div>

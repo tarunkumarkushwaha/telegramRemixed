@@ -9,9 +9,11 @@ import Card from './Card';
 
 const Navbar = () => {
   const [Showsidebar, setShowSidebar] = useState(false)
-  const { dark, setdark, query, setquery, chatdata, chatNamedata , setchatNamedata } = useContext(Context);
+  const { dark, setdark, query, setquery, chatdata} = useContext(Context);
 
   // console.log(chatdata)
+
+  let chatNamedata = Object.keys(chatdata)
 
   const style = {
     uiMode: dark ?
@@ -51,7 +53,7 @@ const Navbar = () => {
             />
           </div>
         </div>
-        {chatdata && chatNamedata.map((data, i) => <Card key={i} name={data} />)}
+        {chatdata && chatNamedata.map((name, i) => <Card key={i} name={name} chatdata={chatdata} />)}
       </header>
       <SideBar Showsidebar={Showsidebar} dark={dark} toggleNav={toggleNav} setdark={setdark} />
     </>
