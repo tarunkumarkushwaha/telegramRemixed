@@ -6,10 +6,11 @@ import CallIcon from '@mui/icons-material/Call';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
+import CloseIcon from '@mui/icons-material/Close';
 
 const Chat = () => {
     const [chat, setchat] = useState("")
-    const { dark, currentChat } = useContext(Context);
+    const { dark, currentChat, setcurrentChat } = useContext(Context);
 
     let currentChatName = Object.keys(currentChat)[0]
     let messeges = currentChat[currentChatName].map((i) => i.message)
@@ -46,17 +47,18 @@ const Chat = () => {
                 <div className="flex items-center justify-between p-4 ">
                     <div className="flex items-center">
                         <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-2xl">
-                            MB
+                        {currentChatName.split(' ').map(word => word[0].toUpperCase()).join('')}
                         </div>
                         <div className="ml-4">
                             <div className="font-bold">{currentChatName}</div>
                             <div className="text-sm text-gray-400">{`last seen ${day}-${month}-${year}`}</div>
                         </div>
                     </div>
-                    <div className="flex items-center space-x-4">
+                    <div className="flex items-center space-x-4 cursor-pointer">
                         <SearchIcon className="text-gray-400" />
                         <MoreVertIcon className="text-gray-400" />
                         <CallIcon className="text-gray-400" />
+                        <div onClick={()=>setcurrentChat()}><CloseIcon className="text-gray-400" /></div>
                     </div>
                 </div>
 
