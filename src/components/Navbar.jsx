@@ -30,7 +30,7 @@ const Navbar = () => {
 
   return (
     <>
-      <header className={`${style.uiMode} ${style.text} min-h-screen sm:w-[25%] w-full`}>
+      <header className={`${style.uiMode} ${style.text} min-h-screen smooth-entry md:w-[25%] w-full`}>
         <div className="flex items-start p-2 box-border">
           <div onClick={toggleNav} className={`p-1 md:p-3 cursor-pointer`}><MenuIcon /></div>
           <div className="relative mx-2">

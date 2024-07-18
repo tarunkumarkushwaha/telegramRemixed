@@ -5,6 +5,7 @@ const Card = ({ name, chatdata }) => {
     const { dark, setcurrentChat } = useContext(Context);
 
     let chat = chatdata[name]
+    // console.log(chat[chat.length-1].message.slice(0, 15))
 
     const setChatScreen = () => {
         setcurrentChat({ [name]: chat })
@@ -31,12 +32,12 @@ const Card = ({ name, chatdata }) => {
                 </div>
                 <div className='flex flex-col p-2 justify-center w-[80%]'>
                     <div className='flex justify-between items-center w-full'>
-                        <div className="text-lg font-medium">{name}</div>
-                        <div className="text-gray-400 text-sm">{`${day}-${month}`}</div>
+                        <div className="text-base font-medium">{name}</div>
+                        <div className="text-gray-400 text-xs">{`${day}-${month}`}</div>
                     </div>
                     <div className='mt-2'>
                         <p className="  w-64 overflow-hidden text-ellipsis whitespace-nowrap">
-                            hey
+                            {chat[chat.length-1].message.slice(0, 15) + "..."}
                         </p>
                     </div>
 

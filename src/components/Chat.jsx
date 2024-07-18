@@ -7,6 +7,7 @@ import AttachFileIcon from '@mui/icons-material/AttachFile';
 import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import CloseIcon from '@mui/icons-material/Close';
+import CallingScreen from './CallingScreen';
 
 const Chat = () => {
     const [chat, setchat] = useState("")
@@ -33,8 +34,8 @@ const Chat = () => {
 
     const ChatBubble = ({ messege }) => {
         return (
-            <div className="max-w-xl w-40 p-2 m-5 bg-purple-600 rounded-lg relative">
-                <div>{messege}</div>
+            <div className="max-w-2xl w-64 p-2 m-5 bg-purple-600 rounded-lg relative">
+                <div className='text-sm'>{messege}</div>
                 <div className="text-xs text-gray-300 text-right">{`${day}-${month}-${year}`}</div>
                 <div className="absolute "></div>
             </div>
@@ -43,7 +44,7 @@ const Chat = () => {
 
     return (
         <>
-            <div className={`sm:flex hidden flex-col h-screen w-[75%] ${style.text} ${style.uiMode}`}>
+            <div className={`flex flex-col smooth-entry h-screen w-full md:w-[75%] ${style.text} ${style.uiMode}`}>
                 <div className="flex items-center justify-between p-4 ">
                     <div className="flex items-center">
                         <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-2xl">
@@ -63,8 +64,7 @@ const Chat = () => {
                 </div>
 
                 <div className="flex-1 p-2 m-5 overflow-y-auto">
-                    {/* <div className="flex justify-center text-gray-400 mb-4">Today</div> */}
-                    {messeges.map((messege) => <ChatBubble messege={messege} />)}
+                    {messeges.map((messege,i) => <ChatBubble key={i} messege={messege} />)}
                 </div>
 
                 <div className="p-4 flex justify-center items-center">
