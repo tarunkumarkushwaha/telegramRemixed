@@ -11,18 +11,17 @@ import CallingScreen from './CallingScreen';
 
 const Chat = () => {
     const [chat, setchat] = useState("")
+    const [calling, setcalling] = useState(false)
     const { dark, currentChat, setcurrentChat } = useContext(Context);
 
     let currentChatName = Object.keys(currentChat)[0]
     let messeges = currentChat[currentChatName].map((i) => i.message)
 
-    const dateString = currentChat[currentChatName][0].updated_at
+    const dateString = currentChat[currentChatName][0].created_at
     const date = new Date(dateString);
     const day = date.getDate();
     const year = date.getFullYear();
     const month = date.getMonth() + 1;
-
-    // console.log(currentChat)
 
     const style = {
         uiMode: dark ?
@@ -45,10 +44,11 @@ const Chat = () => {
     return (
         <>
             <div className={`flex flex-col smooth-entry h-screen w-full md:w-[75%] ${style.text} ${style.uiMode}`}>
-                <div className="flex items-center justify-between p-4 ">
+                {calling ? <CallingScreen setcalling={() => setcalling(!calling)} /> : <><div className="flex items-center justify-between p-4 ">
                     <div className="flex items-center">
+
                         <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-2xl">
-                        {currentChatName.split(' ').map(word => word[0].toUpperCase()).join('')}
+                            {currentChatName.split(' ').map(word => word[0].toUpperCase()).join('')}
                         </div>
                         <div className="ml-4">
                             <div className="font-bold">{currentChatName}</div>
@@ -58,28 +58,28 @@ const Chat = () => {
                     <div className="flex items-center space-x-4 cursor-pointer">
                         <SearchIcon className="text-gray-400" />
                         <MoreVertIcon className="text-gray-400" />
-                        <CallIcon className="text-gray-400" />
-                        <div onClick={()=>setcurrentChat()}><CloseIcon className="text-gray-400" /></div>
+                        <div className='pointer ' onClick={() => setcalling(!calling)}><CallIcon className="text-gray-400" /></div>
+                        <div onClick={() => setcurrentChat()}><CloseIcon className="text-gray-400" /></div>
                     </div>
                 </div>
-
-                <div className="flex-1 p-2 m-5 overflow-y-auto">
-                    {messeges.map((messege,i) => <ChatBubble key={i} messege={messege} />)}
-                </div>
-
-                <div className="p-4 flex justify-center items-center">
-                    <div className="relative mx-2 w-2/3">
-                        <InsertEmoticonIcon className='absolute top-3 left-3' />
-                        <input
-                            type="text"
-                            placeholder="Search..."
-                            onChange={(e) => setchat(e.target.value)}
-                            className="w-full py-3 pl-10 pr-4 bg-zinc-400/25 bg-opacity-50 text-black rounded-2xl border border-transparent focus:border-blue-400 focus:ring-0 focus:outline-none"
-                        />
-                        <AttachFileIcon className='absolute top-3 right-3' />
+                    <div className="flex-1 p-2 m-5 overflow-y-auto">
+                        {messeges.map((messege, i) => <ChatBubble key={i} messege={messege} />)}
                     </div>
-                    <div className='border-2 border-slate-900 p-2 rounded-full'><KeyboardVoiceIcon className='' /></div>
-                </div>
+                    <div className="p-4 flex justify-center items-center">
+                        <div className="relative mx-2 w-2/3">
+                            <InsertEmoticonIcon className='absolute top-3 left-3' />
+                            <input
+                                type="text"
+                                placeholder="Search..."
+                                onChange={(e) => setchat(e.target.value)}
+                                className="w-full py-3 pl-10 pr-4 bg-zinc-400/25 bg-opacity-50 text-black rounded-2xl border border-transparent focus:border-blue-400 focus:ring-0 focus:outline-none"
+                            />
+                            <AttachFileIcon className='absolute top-3 right-3' />
+                        </div>
+                        <div className='border-2 border-slate-900 p-2 rounded-full'><KeyboardVoiceIcon className='' /></div>
+                    </div>
+                </>
+                }
             </div>
         </>
     )
