@@ -1,5 +1,6 @@
 import React, { useContext } from 'react';
 import { Context } from '../MyContext';
+import { useNavigate } from 'react-router-dom';
 
 const Card = ({ name, chatdata }) => {
     const { dark, setcurrentChat } = useContext(Context);
@@ -7,8 +8,11 @@ const Card = ({ name, chatdata }) => {
     let chat = chatdata[name]
     // console.log(chat[chat.length-1].message.slice(0, 15))
 
+    let navigate = useNavigate()
+
     const setChatScreen = () => {
         setcurrentChat({ [name]: chat })
+        navigate(`/chat${name}`);
     }
 
     const dateString = chat[0].created_at

@@ -8,11 +8,14 @@ import KeyboardVoiceIcon from '@mui/icons-material/KeyboardVoice';
 import InsertEmoticonIcon from '@mui/icons-material/InsertEmoticon';
 import CloseIcon from '@mui/icons-material/Close';
 import CallingScreen from './CallingScreen';
+import { useNavigate, useParams } from "react-router";
 
 const Chat = () => {
     const [chat, setchat] = useState("")
     const [calling, setcalling] = useState(false)
     const { dark, currentChat, setcurrentChat } = useContext(Context);
+
+    // console.log(currentChat,"chat")
 
     let currentChatName = Object.keys(currentChat)[0]
     let messeges = currentChat[currentChatName].map((i) => i.message)
@@ -41,10 +44,15 @@ const Chat = () => {
         )
     }
 
+    let navigate = useNavigate()
+
+    // let { chat } = useParams();
+    // console.log(chat,"chit")
+
     return (
         <>
             <div className={`flex flex-col smooth-entry h-screen w-full md:w-[75%] ${style.text} ${style.uiMode}`}>
-                {calling ? <CallingScreen setcalling={() => setcalling(!calling)} /> : <><div className="flex items-center justify-between p-4 ">
+                {calling ? <CallingScreen Callname={currentChatName} setcalling={() => setcalling(!calling)} /> : <><div className="flex items-center justify-between p-4 ">
                     <div className="flex items-center">
 
                         <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center text-2xl">
@@ -59,7 +67,10 @@ const Chat = () => {
                         <SearchIcon className="text-gray-400" />
                         <MoreVertIcon className="text-gray-400" />
                         <div className='pointer ' onClick={() => setcalling(!calling)}><CallIcon className="text-gray-400" /></div>
-                        <div onClick={() => setcurrentChat()}><CloseIcon className="text-gray-400" /></div>
+                        <div onClick={() => {
+                            navigate("/")
+                            setcurrentChat()
+                            }}><CloseIcon className="text-gray-400" /></div>
                     </div>
                 </div>
                     <div className="flex-1 p-2 m-5 overflow-y-auto">
